@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <div id="root" style="white-space: pre-line;"></div>
+    <script src="../dist/web-browser-utils.js"></script>
+    <script>
+      var root = document.getElementById("root");
+      root.innerHTML += 'Browser Info:\r\n';
+      root.innerHTML += `Name:${BrowserUtil.browserName}  version:${BrowserUtil.browserVersion}\r\n`
+      root.innerHTML += '\r\n\r\n';
+      root.innerHTML += 'System Info:\r\n';
+      root.innerHTML += `Name:${SystemUtil.systemName}  version:${SystemUtil.systemVersion}\r\n`
+    </script>
+  </body>
+</html>
