@@ -8,6 +8,10 @@
     "dev": "rm -rf ./dist/**.* && webpack --mode development --config script/webpack.dev.config.js",
     "prod": "rm -rf ./dist/**.* && webpack --mode production --config script/webpack.pro.config.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fjqgx/web-browser-utils.git"
+  },
   "files": [
     "dist",
     "types"
