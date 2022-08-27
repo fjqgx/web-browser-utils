@@ -7,8 +7,8 @@ enum SystemName {
   WindowsVista = "Windows vista",
   WindowsXP = "Windows xp",
   Android = "Android",
-  Iphone = "iphone",
-  Ipad = "ipad",
+  iPhone = "iPhone",
+  iPad = "iPad",
   iOS = "iOS",
   Linux = "Linux",
   ChromeOS = "ChromeOS",
@@ -40,7 +40,7 @@ export class SystemUtil {
    * 判断是否是IOS系统
    */
   static get isIos (): boolean {
-    return SystemName.Iphone === SystemUtil.systemName || SystemName.Ipad === SystemUtil.systemName
+    return SystemName.iPhone === SystemUtil.systemName || SystemName.iPad === SystemUtil.systemName
   }
 
   /**
@@ -104,10 +104,10 @@ export class SystemUtil {
       if (navigator && navigator.userAgent) {
         let ua: string = navigator.userAgent.toLowerCase()
         if (ua.indexOf('ipad') > -1) {
-          SystemUtil.system_name = SystemName.Ipad
+          SystemUtil.system_name = SystemName.iPad
           SystemUtil.system_version = SystemUtil.getIosSystemVersion(ua)
         } else if (ua.indexOf('iphone') > -1) {
-          SystemUtil.system_name = SystemName.Iphone
+          SystemUtil.system_name = SystemName.iPhone
           SystemUtil.system_version = SystemUtil.getIosSystemVersion(ua)
         } else if (ua.indexOf('android') > -1) {
           SystemUtil.system_name = SystemName.Android
@@ -131,7 +131,7 @@ export class SystemUtil {
           }
         } else if (ua.indexOf('mac') > -1) {
           if (navigator && navigator.maxTouchPoints && navigator.maxTouchPoints > 0) {
-            SystemUtil.system_name = SystemName.Ipad
+            SystemUtil.system_name = SystemName.iPad
             SystemUtil.system_version = SystemUtil.getIosSystemVersion(ua)
           } else {
             SystemUtil.system_name = SystemName.MacOS
