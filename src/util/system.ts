@@ -1,4 +1,4 @@
-enum SystemName {
+export enum SystemName {
   Unknown = "Unknown",
   MacOS = "Mac",
   Windows = "Windows",
@@ -21,6 +21,12 @@ export class SystemUtil {
 
   private static system_name: SystemName = SystemName.Unknown;
   private static system_version: string = '';
+
+  private static mock_useragent: string = '';
+
+  static set mockUserAgent(userAgent: string) {
+    SystemUtil.mock_useragent = userAgent;
+  }
 
   /**
    * 是否是Mac系统
@@ -101,8 +107,9 @@ export class SystemUtil {
    */
   static getSystemInfo ():void {
     if (!SystemUtil.system_name || !SystemUtil.system_version) {
-      if (navigator && navigator.userAgent) {
-        let ua: string = navigator.userAgent.toLowerCase()
+      if (SystemUtil.mock_useragent || (navigator && navigator.userAgent)) {
+        let ua: string = SystemUtil.mock_useragent || navigator.userAgent;
+        ua = ua.toLowerCase();
         if (ua.indexOf('ipad') > -1) {
           SystemUtil.system_name = SystemName.iPad
           SystemUtil.system_version = SystemUtil.getIosSystemVersion(ua)
