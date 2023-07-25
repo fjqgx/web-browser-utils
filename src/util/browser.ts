@@ -1,44 +1,24 @@
+import { BrowserName } from "../../types";
 import { SystemUtil } from "./system";
-
-export enum BrowserName {
-  IE = "IE",
-  Chrome = 'Chrome',
-  Safari = 'Safari',
-  Firefox = 'Firefox',
-  Opera = 'Opera',
-  Edge = "Edge",
-  MicroMessenger = 'MicroMessenger',
-  X5Core = 'X5Core',
-  Quark = "Quark",
-  QQ = 'QQ',
-  QQBrowser = 'QQBrowser',
-  DingTalk  = 'DingTalk',
-  Electron = 'Electron',
-  Sogou = "Sogou",
-  Vivo = "VivoBrowser",
-  Oppo = "OppoBrowser",
-  UC = "UCBrowser",
-  MI = "MiBrowser",
-  Huawei = 'Huawei',
-  Finger = 'Finger',
-  Lenovo = "SLBrowser",   // 联想浏览器
-  Maxthon = "Maxthon",  // 遨游浏览器
-  Liebao = "Liebao",    // 猎豹浏览器
-  Meizu = "MZBrowser",
-  Unknown = 'unknown',
-}
 
 export class BrowserUtil {
 
   private static browser_name: BrowserName = BrowserName.Unknown;
   private static browser_version: string = '';
+  private static browser_mobile: boolean = false;
 
-  private static mock_useragent: string = '';
-
-  static set mockUserAgent(userAgent: string) {
-    BrowserUtil.mock_useragent = userAgent;
+  /**
+   * 此方法仅为单元测试使用，用于清理当前状态，mock不同的浏览器
+   */
+  public static clear (): void {
+    BrowserUtil.browser_name = BrowserName.Unknown;
+    BrowserUtil.browser_version = '';
+    BrowserUtil.browser_mobile = false;
   }
 
+  /**
+   * 判断当前环境是否为浏览器
+   */
   static get isBrowser(): boolean {
     return typeof document !== 'undefined'
   }
@@ -83,6 +63,16 @@ export class BrowserUtil {
   static get isSafari(): boolean {
     BrowserUtil.getBrowserInfo()
     return BrowserName.Safari === BrowserUtil.browser_name
+  }
+
+  static get isChromium(): boolean {
+    if (navigator && navigator.userAgent) {
+      const ua: string = navigator.userAgent.toLocaleLowerCase();
+      if (ua.indexOf('chrome') > -1 || ua.indexOf('chromium') > -1) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -202,6 +192,14 @@ export class BrowserUtil {
     return BrowserName.QQ === BrowserUtil.browserName
   }
 
+  static get isWeibo (): boolean {
+    return BrowserName.Weibo === BrowserUtil.browserName;
+  }
+
+  static get isByteDance (): boolean {
+    return BrowserName.ByteDance === BrowserUtil.browserName;
+  }
+
   static get isQQBrowser(): boolean {
     BrowserUtil.getBrowserInfo()
     return BrowserName.QQBrowser === BrowserUtil.browserName
@@ -256,7 +254,7 @@ export class BrowserUtil {
    */
   static get browserVersion(): string {
     BrowserUtil.getBrowserInfo()
-    return BrowserUtil.browser_version
+    return BrowserUtil.browser_version;
   }
 
   /**
@@ -278,23 +276,9 @@ export class BrowserUtil {
     return BrowserName.Electron === BrowserUtil.browserName
   }
 
-  static get userAgent(): string {
-    let ua: string = navigator.userAgent.toLowerCase();//Gecko
-    let index: number = ua.indexOf("gecko");
-    if (index > -1) {
-      index = ua.indexOf(" ", index);
-      ua = ua.substring(index + 1, ua.length);
-      let arr: string[] = ua.split(" ");
-      ua = "";
-      for (let i = 0; i < arr.length; ++i) {
-        let itemArr: string[] = arr[i].split('/');
-        if (itemArr && itemArr.length) {
-          ua += (itemArr[0] + " ");
-        }
-      }
-    }
-
-    return ua
+  static get isMobileBrowser (): boolean {
+    BrowserUtil.getBrowserInfo();
+    return SystemUtil.isIos || SystemUtil.isAndroid || BrowserUtil.browser_mobile;
   }
 
   /**
@@ -308,13 +292,23 @@ export class BrowserUtil {
       let minVersionArr: string[] = minVersionStr.split('.');
       let ver1: number = 0
       let ver2: number = 0
-      for (let i = 0; i < versionArr.length && i < minVersionArr.length; ++i) {
+      let i: number
+      for (i = 0; i < versionArr.length && i < minVersionArr.length; ++i) {
         ver1 = isNaN(parseInt(versionArr[i], 10)) ? 0 : parseInt(versionArr[i], 10)
         ver2 = isNaN(parseInt(minVersionArr[i], 10)) ? 0 : parseInt(minVersionArr[i], 10)
         if (ver1 < ver2) {
           return false;
         } else if (ver1 > ver2) {
           return true
+        }
+      }
+      if (versionArr.length < minVersionArr.length) {
+        while (i < minVersionArr.length) {
+          let ver: number = isNaN(parseInt(minVersionArr[i], 10)) ? 0 : parseInt(minVersionArr[i], 10);
+          if (ver > 0) {
+            return false;
+          }
+          ++i
         }
       }
       return true
@@ -327,14 +321,8 @@ export class BrowserUtil {
    */
   private static getBrowserInfo(): void {
     if (!BrowserUtil.browser_name || !BrowserUtil.browser_version) {
-      let ua: string = '';
-      if (BrowserUtil.mock_useragent) {
-        ua = BrowserUtil.mock_useragent.toLocaleLowerCase();
-      } else {
-        ua = navigator?.userAgent.toLocaleLowerCase();
-      }
-      
-      
+      let ua: string = navigator?.userAgent.toLocaleLowerCase();
+      BrowserUtil.browser_mobile = /Mobi/i.test(ua); 
       let s: RegExpMatchArray | null;
       (s = ua.match(/edg[e|a]?\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]) :
         (s = ua.match(/edgios\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]) :
@@ -364,7 +352,27 @@ export class BrowserUtil {
                                                         (s = ua.match(/qqbrowserlite\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.QQBrowser, ua, s[1]) : // mac平台下qq浏览器用的qqbrowserlite
                                                           (s = ua.match(/dingtalk.([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.DingTalk, ua, s[1]) :
                                                             (s = ua.match(/tbs\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.X5Core, ua, s[1]) :
-                                                              (s = ua.match(/version\/([\d.]+).*safari/)) && this.isSafariBrowser(ua) ? BrowserUtil.updateBrowserInfo(BrowserName.Safari, ua, s[1]) : 0
+                                                              (s = ua.match(/version\/([\d.]+).*safari/)) && this.isSafariBrowser(ua) ? BrowserUtil.updateBrowserInfo(BrowserName.Safari, ua, s[1]) : 0;
+                                                              if (BrowserUtil.browser_name === BrowserName.Unknown) {
+                                                                if (BrowserUtil.checkByteDance(ua)) {
+                                                                  BrowserUtil.browser_name = BrowserName.ByteDance;
+                                                                } else if (BrowserUtil.checkWeibo(ua)) {
+                                                                  BrowserUtil.browser_name = BrowserName.Weibo;
+                                                                } else if (ua.indexOf('aliapp') > -1) {
+                                                                  let arr: string[] | null = ua.match(/aliapp\((.*?)\)/i);
+                                                                  if (arr && arr.length > 1) {
+                                                                    let info: string[] = arr[1].split('/');
+                                                                    if ('tm' === info[0]) {
+                                                                      BrowserUtil.browser_name = BrowserName.Tmall;
+                                                                    } else if ('tb' === info[0]) {
+                                                                      BrowserUtil.browser_name = BrowserName.Taobao;
+                                                                    } else {
+                                                                      BrowserUtil.browser_name = BrowserName.AliApp;
+                                                                    }
+                                                                    BrowserUtil.browser_version = info[1];
+                                                                  }
+                                                                }
+                                                              }
     }
   }
 
@@ -416,14 +424,20 @@ export class BrowserUtil {
 
   private static updateBrowserInfo(brwoserType: BrowserName, ua: string, browserVersion: string): void {
     BrowserUtil.browser_name = brwoserType;
+    BrowserUtil.browser_version = browserVersion;
 
     let s: RegExpMatchArray | null = null;
     switch (brwoserType) {
 
       case BrowserName.QQBrowser:
         if (SystemUtil.isIos || SystemUtil.isMacOS) {
-          s = ua.match(/version\/([\d.]+).*safari/)
-          BrowserUtil.browser_version = s ? s[1] : '0.0'
+          s = ua.match(/version\/([\d.]+).*safari/);
+          if (s) {
+            BrowserUtil.browser_version = s[1];
+          } else {
+            s = ua.match(/qqbrowser\/([\d.]+)/);
+            BrowserUtil.browser_version = s ? s[1] : '0.0'
+          }
         } else {
           s = ua.match(/chrome\/([\d.]+)/);
           BrowserUtil.browser_version = s ? s[1] : '0.0'
@@ -434,14 +448,30 @@ export class BrowserUtil {
       case BrowserName.Oppo:
       case BrowserName.Meizu:
       case BrowserName.Huawei:
+      case BrowserName.ByteDance:
+      case BrowserName.Weibo:
       case BrowserName.Sogou:
         s = ua.match(/chrome\/([\d.]+)/);
         BrowserUtil.browser_version = s ? s[1] : '0.0'
         break;
 
+      case BrowserName.Firefox:
+        if ('ontouchstart' in document.documentElement) {
+          BrowserUtil.browser_mobile = true;
+        }
+        break;
+
       default:
-        BrowserUtil.browser_version = browserVersion;
+        
         break;
     }
+  }
+
+  private static checkByteDance (ua: string): boolean {
+    return ua.indexOf('bytedance') > -1 || ua.indexOf('aweme') > -1;
+  }
+
+  private static checkWeibo (ua: string): boolean {
+    return ua.indexOf('weibo') > -1;
   }
 }

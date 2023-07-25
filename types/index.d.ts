@@ -1,28 +1,33 @@
-export enum BrowserName {
-  IE = "IE",
+export const enum BrowserName {
+  IE = 'IE',
   Chrome = 'Chrome',
   Safari = 'Safari',
   Firefox = 'Firefox',
   Opera = 'Opera',
-  Edge = "Edge",
+  Edge = 'Edge',
   MicroMessenger = 'MicroMessenger',
+  Tmall = 'Tmall',
+  Taobao = 'Taobao',
+  AliApp = 'AliApp',
   X5Core = 'X5Core',
-  Quark = "Quark",
+  Quark = 'Quark',
   QQ = 'QQ',
   QQBrowser = 'QQBrowser',
   DingTalk  = 'DingTalk',
   Electron = 'Electron',
-  Sogou = "Sogou",
-  Vivo = "VivoBrowser",
-  Oppo = "OppoBrowser",
-  UC = "UCBrowser",
-  MI = "MiBrowser",
+  Sogou = 'Sogou',
+  Vivo = 'VivoBrowser',
+  Oppo = 'OppoBrowser',
+  UC = 'UCBrowser',
+  MI = 'MiBrowser',
   Huawei = 'Huawei',
-  Finger = 'Finger',
-  Lenovo = "SLBrowser",   // 联想浏览器
-  Maxthon = "Maxthon",  // 遨游浏览器
-  Liebao = "Liebao",    // 猎豹浏览器
-  Meizu = "MZBrowser",
+  Finger = 'FingerBrowser',
+  Lenovo = 'SLBrowser',   // 联想浏览器
+  Maxthon = 'Maxthon',  // 遨游浏览器
+  Liebao = 'Liebao',    // 猎豹浏览器
+  Meizu = 'MZBrowser',
+  Weibo = 'Weibo',
+  ByteDance = 'ByteDance',
   Unknown = 'unknown',
 }
 
@@ -31,242 +36,214 @@ export class BrowserUtil {
   /**
    * 获取网页域名
    */
-  static get domain (): string;
+  static readonly domain: string;
 
   /**
    * 是否使用Https协议
-   * @return {boolean}
    */
-  static get isHttps (): boolean;
+  static readonly isHttps: boolean;
 
-
-  static get isSupportScreenShare (): boolean;
+  /**
+   * 是否支持屏幕共享
+   */
+  static readonly isSupportScreenShare: boolean;
 
   /**
    * 是否是Chrome浏览器
    */
-  static get isChrome (): boolean;
+  static readonly isChrome: boolean;
 
   /**
    * 是否是Safari浏览器
    */
-  static get isSafari (): boolean;
+  static readonly isSafari: boolean;
 
   /**
    * 是否是IE浏览器
    */
-   static get isIE (): boolean
+   static readonly isIE: boolean
 
   /**
    * 是否是Firefox浏览器
    */
-  static get isFirefox (): boolean;
+  static readonly isFirefox: boolean;
 
   /**
    * 是否是UC浏览器
    */
-  static get isUCBrowser (): boolean;
+  static readonly isUCBrowser: boolean;
 
   /**
    * 是否是夸克浏览器
    */
-   static get isQuarkBrowser (): boolean;
+   static readonly isQuarkBrowser: boolean;
 
   /**
    * 是否是Finger浏览器
    */
-  static get isFingerBrowser (): boolean;
+  static readonly isFingerBrowser: boolean;
 
   /**
    * 是否是Opera浏览器
    */
-  static get isOpera (): boolean;
+  static readonly isOpera: boolean;
 
   /**
    * 是否是微信
    */
-  static get isMicroMessenger (): boolean;
+  static readonly isMicroMessenger: boolean;
 
   /**
    * 是否是QQ内置
    */
-  static get isQQ (): boolean;
+  static readonly isQQ: boolean;
 
   /**
    * 是否是QQ浏览器
    */
-  static get isQQBrowser (): boolean
+  static readonly isQQBrowser: boolean
 
   /**
    * 是否是X5
    */
-  static get isX5Core (): boolean;
+  static readonly isX5Core: boolean;
 
   /**
    * 是否是钉钉
    */
-  static get isDingTalk (): boolean;
+  static readonly isDingTalk: boolean;
 
   /**
    * 是否是Edge
    */
-  static get isEdge (): boolean;
+  static readonly isEdge: boolean;
 
   /**
    * 是否是Sogou
    */
-  static get isSogou (): boolean;
+  static readonly isSogou: boolean;
 
   /**
    *  是否是Vivo浏览器
    */
-  static get isVivoBroswer (): boolean;
+  static readonly isVivoBroswer: boolean;
 
   /**
    * 是否是Oppo浏览器
    */
-  static get isOppoBrowser (): boolean
+  static readonly isOppoBrowser: boolean
 
   /**
    * 是否是小米浏览器
    */
-  static get isMiBrowser (): boolean;
+  static readonly isMiBrowser: boolean;
 
   /**
    * 是否是联想浏览器
    */
-  static get isLenovoBrowser (): boolean;
+  static readonly isLenovoBrowser: boolean;
 
   /**
    * 是否是遨游浏览器
    */
-   static get isMaxthonBrowser (): boolean;
+   static readonly isMaxthonBrowser: boolean;
 
   /**
    * 是否是猎豹浏览器
    */
-  static get isLiebaoBrowser (): boolean;
+  static readonly isLiebaoBrowser: boolean;
 
   /**
    * 是否是华为浏览器
    */
-  static get isHuaweiBrowser (): boolean;
+  static readonly isHuaweiBrowser: boolean;
 
   /**
    * 是否是魅族浏览器
    */
-  static get isMZBrowser (): boolean;
+  static readonly isMZBrowser: boolean;
 
-  static get isUnknown (): boolean;
+  static readonly isUnknown: boolean;
 
   /**
    * 获取浏览器名称
    */
-  static get browserName(): BrowserName;
+  static readonly browserName: BrowserName;
 
   /**
    * 获取浏览器版本号
    */
-  static get browserVersion (): string;
+  static readonly browserVersion: string;
 
   /**
    * 获取浏览器主版本号，内核版本
    */
-  static get browserMainVersion (): Number;
+  static readonly browserMainVersion: Number;
 
   /**
    * 判断是否是Electron
    */
-  static get isElectron (): boolean;
-
-  /**
-   * 判断版本是否支持
-   * @param minVersionStr 最小版本号
-   */
-  static compareVersion (minVersionStr: string): boolean;
+  static readonly isElectron: boolean;
 }
 
 /**
  * 系统平台
  */
-export enum SystemName {
-  Unknown = "Unknown",
-  MacOS = "Mac",
-  Windows = "Windows",
-  Windows10 =  "Windows 10",
-  Windows7 = "Windows 7",
-  WindowsVista = "Windows vista",
-  WindowsXP = "Windows xp",
-  Android = "Android",
-  iPhone = "iPhone",
-  iPad = "iPad",
-  iOS = "iOS",
-  Linux = "Linux",
-  ChromeOS = "ChromeOS",
+export const enum SystemName {
+  Unknown = 'Unknown',
+  MacOS = 'Mac',
+  Windows = 'Windows',
+  Android = 'Android',
+  iPhone = 'iPhone',
+  iPad = 'iPad',
+  iOS = 'iOS',
+  Linux = 'Linux',
+  ChromeOS = 'ChromeOS',
 }
 
 export class SystemUtil {
   /**
    * 是否是Mac系统
    */
-  static get isMacOS (): boolean;
+  static readonly isMacOS: boolean;
 
   /**
    * 是否是windows系统
    */
-  static get isWindows (): boolean;
+  static readonly isWindows: boolean;
 
   /*
    * 判断是否是iOS系统
    */
-  static get isIos (): boolean;
+  static readonly isIos: boolean;
 
   /**
    * 判断是否是Android系统
-   * @returns {boolean}
    */
-  static get isAndroid (): boolean;
+  static readonly isAndroid: boolean;
 
   /**
    * 判断是否是Linux系统
    */
-  static get isLinux (): boolean;
+  static readonly isLinux: boolean;
 
   /**
    * 获取操作系统名称
    */
-  static get systemName(): SystemName;
+  static readonly systemName: SystemName;
 
   /**
    * 获取系统版本号
    */
-  static get systemVersion (): string;
+  static readonly systemVersion: string;
 
   /**
    * 获取平台
    */
-  static get platform (): string;
+  static readonly platform: string;
 
-  static get isUnknown (): boolean;
+  static readonly isUnknown: boolean;
 
-  /**
-   * 判断版本是否支持
-   * @param minVersionStr 最小版本号
-   */
-  static compareVersion (minVersionStr: string): boolean;
+  static readonly deviceType: string;
 }
-
-export declare class Guid {
-  static create (len: number, radix?: number): string
-}
-
-export declare class LocalStorage {
-  static get uuid (): string
-}
-
-export declare class ApiRequest {
-  static ajaxPost(url: string, param: any): Promise<any>;
-}
-
-
 
