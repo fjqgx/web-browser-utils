@@ -2,6 +2,8 @@ import { Guid } from "./util/guid";
 import { BrowserUtil } from "./util/browser";
 import { SystemUtil } from "./util/system";
 import { LocalStorage } from "./util/localstorage";
+import { EventEmitter } from "./util/event-emitter";
+
 
 declare global {
   interface Window {
@@ -9,6 +11,7 @@ declare global {
     SystemUtil: SystemUtil;
     Guid: Guid;
     LocalStorage: LocalStorage;
+
   }
 }
 
@@ -19,5 +22,5 @@ if (window) {
   window.LocalStorage = LocalStorage;
 }
 
-export { BrowserUtil, SystemUtil, Guid, LocalStorage };
+export { BrowserUtil, SystemUtil, Guid, LocalStorage, EventEmitter };
 

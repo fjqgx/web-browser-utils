@@ -1,12 +1,12 @@
 {
   "name": "web-browser-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "browser utils",
   "main": "./dist/index.js",
   "scripts": {
     "test": "jest",
-    "dev": "rm -rf ./dist/**.* && webpack --mode development --config script/webpack.dev.config.js",
-    "prod": "rm -rf ./dist/**.* && webpack --mode production --config script/webpack.pro.config.js"
+    "dev": "webpack --mode development --config script/webpack.dev.config.js",
+    "prod": "webpack --mode production --config script/webpack.pro.config.js"
   },
   "repository": {
     "type": "git",

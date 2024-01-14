@@ -269,4 +269,19 @@ export declare class ApiRequest {
 }
 
 
+export declare class EventEmitter<T> {
+  
+  public listeners<K extends keyof T>(type: K): T[K][];
+
+  public emit<K extends keyof T>(type: K, ...args: any[]): boolean;
+
+  public off<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
+
+  public on<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
+
+  public once<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
+
+  public removeAllListeners<K extends keyof T>(type?: K): EventEmitter<T>;
+}
+
 
