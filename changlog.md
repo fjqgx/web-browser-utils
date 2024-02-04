@@ -1,4 +1,7 @@
 
+### 1.0.5
+  * 修复导出方法异常
+
 ### 1.0.4
   * 增加EventEmitter类，强类型的EventEmitter
 

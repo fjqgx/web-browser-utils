@@ -1,8 +1,9 @@
 {
   "name": "web-browser-utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "browser utils",
-  "main": "./dist/index.js",
+  "main": "./dist/web-browser-utils.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "test": "jest",
     "dev": "webpack --mode development --config script/webpack.dev.config.js",
