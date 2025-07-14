@@ -1,6 +1,6 @@
 {
   "name": "web-browser-utils",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "browser utils",
   "main": "./dist/web-browser-utils.js",
   "types": "./types/index.d.ts",

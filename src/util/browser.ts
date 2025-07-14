@@ -26,18 +26,13 @@ export enum BrowserName {
   Liebao = "Liebao",    // 猎豹浏览器
   Meizu = "MZBrowser",
   Unknown = 'unknown',
+  NULL = '',
 }
 
 export class BrowserUtil {
 
-  private static browser_name: BrowserName = BrowserName.Unknown;
-  private static browser_version: string = '';
-
-  private static mock_useragent: string = '';
-
-  static set mockUserAgent(userAgent: string) {
-    BrowserUtil.mock_useragent = userAgent;
-  }
+  protected static browser_name: BrowserName = BrowserName.NULL;
+  protected static browser_version: string = '';
 
   static get isBrowser(): boolean {
     return typeof document !== 'undefined'
@@ -328,12 +323,7 @@ export class BrowserUtil {
   private static getBrowserInfo(): void {
     if (!BrowserUtil.browser_name || !BrowserUtil.browser_version) {
       let ua: string = '';
-      if (BrowserUtil.mock_useragent) {
-        ua = BrowserUtil.mock_useragent.toLocaleLowerCase();
-      } else {
-        ua = navigator?.userAgent.toLocaleLowerCase();
-      }
-      
+      ua = navigator?.userAgent.toLocaleLowerCase();
       
       let s: RegExpMatchArray | null;
       (s = ua.match(/edg[e|a]?\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]) :
