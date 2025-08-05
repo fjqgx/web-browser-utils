@@ -325,36 +325,142 @@ export class BrowserUtil {
       let ua: string = '';
       ua = navigator?.userAgent.toLocaleLowerCase();
       
-      let s: RegExpMatchArray | null;
-      (s = ua.match(/edg[e|a]?\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]) :
-        (s = ua.match(/edgios\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]) :
-          (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? BrowserUtil.updateBrowserInfo(BrowserName.IE, ua, s[1]) :
-            (s = ua.match(/msie ([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.IE, ua, s[1]) :
-              (s = ua.match(/vivobrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Vivo, ua, s[1]) :
-                (s = ua.match(/miuibrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.MI, ua, s[1]) :
-                  (s = ua.match(/heytapbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Oppo, ua, s[1]) :
-                    (s = ua.match(/mzbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Meizu, ua, s[1]) :
-                      (s = ua.match(/ucbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.UC, ua, s[1]) :
-                        (s = ua.match(/quark\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Quark, ua, s[1]) :
-                          (s = ua.match(/slbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Lenovo, ua, s[1]) :
-                            (s = ua.match(/lbbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Liebao, ua, s[1]) :
-                              (s = ua.match(/fingerbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Finger, ua, s[1]) :
-                                (s = ua.match(/huaweibrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Huawei, ua, s[1]) :
-                                  (s = ua.match(/maxthon\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Maxthon, ua, s[1]) :
-                                    (s = ua.match(/firefox\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Firefox, ua, s[1]) :
-                                      (s = ua.match(/electron\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Electron, ua, s[1]) :
-                                        (s = ua.match(/chrome\/([\d.]+)/)) && this.isChromeBrowser(ua) ? BrowserUtil.updateBrowserInfo(BrowserName.Chrome, ua, s[1]) :
-                                          (s = ua.match(/crios\/([\d.]+)/)) && this.isChromeBrowser(ua) ? BrowserUtil.updateBrowserInfo(BrowserName.Chrome, ua, s[1]) : // ios平台下chrome用的crios
-                                            (s = ua.match(/metasr\s([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Sogou, ua, s[1]) : // windows平台下搜狗浏览器
-                                              (s = ua.match(/sogoumobilebrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Sogou, ua, s[1]) : // 移动端搜狗浏览器
-                                                (s = ua.match(/opr.([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.Opera, ua, s[1]) :
-                                                  (s = ua.match(/micromessenger.([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.MicroMessenger, ua, s[1]) :
-                                                    (s = ua.match(/qq\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.QQ, ua, s[1]) :  // 先检测 qq 可能部分android旧版qq内置也包含mqqbrowser
-                                                      (s = ua.match(/m?qqbrowser\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.QQBrowser, ua, s[1]) : // mqqbrowser 或 qqbrowser
-                                                        (s = ua.match(/qqbrowserlite\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.QQBrowser, ua, s[1]) : // mac平台下qq浏览器用的qqbrowserlite
-                                                          (s = ua.match(/dingtalk.([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.DingTalk, ua, s[1]) :
-                                                            (s = ua.match(/tbs\/([\d.]+)/)) ? BrowserUtil.updateBrowserInfo(BrowserName.X5Core, ua, s[1]) :
-                                                              (s = ua.match(/version\/([\d.]+).*safari/)) && this.isSafariBrowser(ua) ? BrowserUtil.updateBrowserInfo(BrowserName.Safari, ua, s[1]) : 0
+      let s: RegExpMatchArray | null = ua.match(/edg(?:ios|[ea]?)\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Edge, ua, s[1]);
+        return;
+      }
+      s = ua.match(/rv:([\d.]+)\) like gecko/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.IE, ua, s[1]);
+        return;
+      }
+      s = ua.match(/msie ([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.IE, ua, s[1]);
+        return;
+      }
+      s = ua.match(/vivobrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Vivo, ua, s[1])
+        return;
+      }
+      s = ua.match(/miuibrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.MI, ua, s[1]);
+        return;
+      }
+      s = ua.match(/heytapbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Oppo, ua, s[1]);
+        return;
+      }
+      s = ua.match(/mzbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Meizu, ua, s[1]);
+        return;
+      }
+      s = ua.match(/ucbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.UC, ua, s[1]);
+        return;
+      }
+      s = ua.match(/quark\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Quark, ua, s[1]);
+        return;
+      }
+      s = ua.match(/slbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Lenovo, ua, s[1]);
+        return;
+      }
+      s = ua.match(/lbbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Liebao, ua, s[1]);
+        return;
+      }
+      s = ua.match(/fingerbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Finger, ua, s[1]);
+        return;
+      }
+      s = ua.match(/huaweibrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Huawei, ua, s[1]);
+        return;
+      } 
+      s = ua.match(/maxthon\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Maxthon, ua, s[1]);
+        return;
+      }
+      s = ua.match(/firefox\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Firefox, ua, s[1]);
+        return;
+      }
+      s = ua.match(/electron\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Electron, ua, s[1]);
+        return;
+      }
+      s = ua.match(/dingtalk.([\d.]+)/)
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.DingTalk, ua, s[1]);
+        return;
+      }
+      s = ua.match(/c(?:hrome|rios)\/([\d.]+)/);
+      if (s !== null && s.length > 1 && this.isChromeBrowser(ua)) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Chrome, ua, s[1]);
+        return;
+      }
+      s = ua.match(/metasr\s([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Sogou, ua, s[1]);
+        return;
+      }
+      s = ua.match(/sogoumobilebrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Sogou, ua, s[1]);
+        return;
+      }
+      s = ua.match(/opr.([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Opera, ua, s[1]);
+        return;
+      }
+      s = ua.match(/micromessenger.([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.MicroMessenger, ua, s[1]);
+        return;
+      }
+      s = s = ua.match(/qq\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.QQ, ua, s[1]);
+        return;
+      }                           
+      // s = ua.match(/m?qqbrowser\/([\d.]+)/);
+      s = ua.match(/(?:m?qqbrowser|M?QQBrowser)\/([\d.]+)/i);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.QQBrowser, ua, s[1]);
+        return;
+      }  
+      s = ua.match(/qqbrowserlite\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.QQBrowser, ua, s[1]);
+        return;
+      }
+      s = ua.match(/tbs\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.X5Core, ua, s[1]);
+        return;
+      } 
+      s = ua.match(/version\/([\d.]+).*safari/);
+      if (s !== null && s.length > 1 && this.isSafariBrowser(ua)) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Safari, ua, s[1]);
+        return;
+      }
     }
   }
 
@@ -411,12 +517,14 @@ export class BrowserUtil {
     switch (brwoserType) {
 
       case BrowserName.QQBrowser:
-        if (SystemUtil.isIos || SystemUtil.isMacOS) {
+        if (SystemUtil.isMacOS) {
           s = ua.match(/version\/([\d.]+).*safari/)
-          BrowserUtil.browser_version = s ? s[1] : '0.0'
+          BrowserUtil.browser_version = s ? s[1] : browserVersion;
+        } if (SystemUtil.isIos) {
+          BrowserUtil.browser_version = browserVersion;
         } else {
           s = ua.match(/chrome\/([\d.]+)/);
-          BrowserUtil.browser_version = s ? s[1] : '0.0'
+          BrowserUtil.browser_version = s ? s[1] : browserVersion;
         }
         break;
 

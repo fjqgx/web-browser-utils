@@ -19,8 +19,8 @@ export enum SystemName {
  */
 export class SystemUtil {
 
-  private static system_name: SystemName = SystemName.Unknown;
-  private static system_version: string = '';
+  protected static system_name: SystemName = SystemName.Unknown;
+  protected static system_version: string = '';
 
   private static mock_useragent: string = '';
 

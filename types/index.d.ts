@@ -255,33 +255,3 @@ export class SystemUtil {
    */
   static compareVersion (minVersionStr: string): boolean;
 }
-
-export declare class Guid {
-  static create (len: number, radix?: number): string
-}
-
-export declare class LocalStorage {
-  static get uuid (): string
-}
-
-export declare class ApiRequest {
-  static ajaxPost(url: string, param: any): Promise<any>;
-}
-
-
-export declare class EventEmitter<T> {
-  
-  public listeners<K extends keyof T>(type: K): T[K][];
-
-  public emit<K extends keyof T>(type: K, ...args: any[]): boolean;
-
-  public off<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
-
-  public on<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
-
-  public once<K extends keyof T>(type: K, fn: T[K]): EventEmitter<T>;
-
-  public removeAllListeners<K extends keyof T>(type?: K): EventEmitter<T>;
-}
-
-

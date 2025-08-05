@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: packageinfo.name + ".js",
     path: path.resolve(__dirname, "../dist"),
-    // libraryTarget: "umd"
+    libraryTarget: "umd"
   },
   resolve: {
     extensions: [".ts", ".js"]
