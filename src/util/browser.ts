@@ -15,6 +15,7 @@ export enum BrowserName {
   DingTalk  = 'DingTalk',
   Electron = 'Electron',
   Sogou = "Sogou",
+  Samsung = "Samsung",
   Vivo = "VivoBrowser",
   Oppo = "OppoBrowser",
   UC = "UCBrowser",
@@ -423,6 +424,11 @@ export class BrowserUtil {
       s = ua.match(/sogoumobilebrowser\/([\d.]+)/);
       if (s !== null && s.length > 1) {
         BrowserUtil.updateBrowserInfo(BrowserName.Sogou, ua, s[1]);
+        return;
+      }
+      s = ua.match(/samsungbrowser\/([\d.]+)/);
+      if (s !== null && s.length > 1) {
+        BrowserUtil.updateBrowserInfo(BrowserName.Samsung, ua, s[1]);
         return;
       }
       s = ua.match(/opr.([\d.]+)/);

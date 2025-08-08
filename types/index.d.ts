@@ -247,6 +247,12 @@ export class SystemUtil {
    */
   static get platform (): string;
 
+  /**
+   * 获取设备id(机型)
+   * 只有Android可以使用，其他设备调用返回空字符串
+   */
+  static get deviceId (): string
+
   static get isUnknown (): boolean;
 
   /**

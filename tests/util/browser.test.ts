@@ -128,18 +128,16 @@ describe('test Android BrowserUtil', () => {
     expect(BrowserUtilTest.browserVersion).toBe('46.0.2490.92');
   })
 
-  test('Android_USERAGENT.Vivo', () => {
-    jest.spyOn(navigator, 'userAgent', 'get').mockReturnValue(Android_USERAGENT.Vivo);
-    // expect(BrowserUtilTest.browserName).toBe(BrowserName.Vivo);
-    // expect(BrowserUtilTest.browserMainVersion).toBe(102);
-    // expect(BrowserUtilTest.browserVersion).toBe('102.0.5005.62');
+  test('Android_USERAGENT.Vivo_X20A', () => {
+    jest.spyOn(navigator, 'userAgent', 'get').mockReturnValue(Android_USERAGENT.Vivo_X20A);
+    expect(BrowserUtilTest.browserName).toBe(BrowserName.Vivo);
+    expect(BrowserUtilTest.browserVersion).toBe('131.0.6778.200');
   })
 
-  test('Android_USERAGENT.Oppo', () => {
-    jest.spyOn(navigator, 'userAgent', 'get').mockReturnValue(Android_USERAGENT.Oppo);
-    // expect(BrowserUtilTest.browserName).toBe(BrowserName.Oppo);
-    // expect(BrowserUtilTest.browserMainVersion).toBe(123);
-    // expect(BrowserUtilTest.browserVersion).toBe('123.0.6312.118');
+  test('Android_USERAGENT.Oppo_A56S', () => {
+    jest.spyOn(navigator, 'userAgent', 'get').mockReturnValue(Android_USERAGENT.Oppo_A56S);
+    expect(BrowserUtilTest.browserName).toBe(BrowserName.Oppo);
+    expect(BrowserUtilTest.browserVersion).toBe('115.0.5790.168');
   })
 
   test('Android_USERAGENT.Mate40Pro_QQBrowser', () => {
@@ -148,6 +146,13 @@ describe('test Android BrowserUtil', () => {
     expect(BrowserUtilTest.browserVersion).toBe('121.0.6167.71');
   })
 
+  test('Android_USERAGENT.SamsungBrowser', () => {
+    jest.spyOn(navigator, 'userAgent', 'get').mockReturnValue(Android_USERAGENT.SamsungBrowser);
+    expect(BrowserUtilTest.browserName).toBe(BrowserName.Samsung);
+    expect(BrowserUtilTest.browserVersion).toBe("28.1");
+  })
+
+  
 })
 
 describe('test iOS BrowserUtil', () => {

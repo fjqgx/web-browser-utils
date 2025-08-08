@@ -37,13 +37,14 @@ export const enum Android_USERAGENT {
   Mate40Pro_QQBrowser = 'Mozilla/5.0 (Linux; U; Android 12; zh-cn; NOH-AL10 Build/HUAWEINOH-AL10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.71 MQQBrowser/16.3 Mobile Safari/537.36 COVC/047707',
   Mate40Pro_Edge = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36 EdgA/136.0.0.0',
 
-  QQBrowser = 'Mozilla/5.0 (Linux; U; Android 12; zh-cn; DCO-AL00 Build/HUAWEIDCO-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.71 MQQBrowser/16.3 Mobile Safari/537.36 COVC/047707',
 
   Mate40Pro_Firefox = 'Mozilla/5.0 (Android 12; Mobile; rv:134.0) Gecko/134.0 Firefox/134.0',
 
-  Vivo = 'Mozilla/5.0 (Linux; Android 12; CPH2173 Build/RKQ1.201217.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/102.0.5005.62 Mobile Safari/537.36',
-  Oppo = 'Mozilla/5.0 (Linux; Android 13; V2025) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.118 Mobile Safari/537.36 VivoBrowser/14.0.6.2',
+  Vivo_X20A = 'Mozilla/5.0 (Linux; Android 8.1.0; vivo X20A Build/OPM1.171019.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/131.0.6778.200 Mobile Safari/537.36 VivoBrowser/25.5.52.0',
+  Oppo_A56S = 'Mozilla/5.0 (X11; Windows) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.5790.168 Safari/537.36 HeyTapBrowser/40.10.0.2',
   Sougou = 'Mozilla/5.0 (Linux; Android 6.0.1; vivo X9Plus; Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.92 Mobile Safari/537.36 SogouMSE,SogouMobileBrowser/5.9.2',
+
+  SamsungBrowser = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/28.1 Chrome/130.0.0.0 Mobile Safari/537.36',
 }
 
 export const enum IPad_USERAGENT {

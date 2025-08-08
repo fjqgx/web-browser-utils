@@ -1,3 +1,5 @@
+import { BrowserUtil } from "./browser";
+
 export enum SystemName {
   Unknown = "Unknown",
   MacOS = "Mac",
@@ -7,6 +9,7 @@ export enum SystemName {
   WindowsVista = "Windows vista",
   WindowsXP = "Windows xp",
   Android = "Android",
+  HarmonyOS = "HarmonyOS",
   iPhone = "iPhone",
   iPad = "iPad",
   iOS = "iOS",
@@ -21,12 +24,7 @@ export class SystemUtil {
 
   protected static system_name: SystemName = SystemName.Unknown;
   protected static system_version: string = '';
-
-  private static mock_useragent: string = '';
-
-  static set mockUserAgent(userAgent: string) {
-    SystemUtil.mock_useragent = userAgent;
-  }
+  protected static device_id: string = '';
 
   /**
    * 是否是Mac系统
@@ -77,6 +75,72 @@ export class SystemUtil {
     return SystemUtil.system_version
   }
 
+  static get platform(): SystemName {
+    switch (SystemUtil.systemName) {
+      case SystemName.Android:
+        return SystemName.Android;
+
+      case SystemName.HarmonyOS:
+        return SystemName.HarmonyOS;
+        
+      case SystemName.iPad:
+      case SystemName.iPhone:
+        return SystemName.iOS;
+
+      case SystemName.Linux:
+        return SystemName.Linux;
+
+      case SystemName.MacOS:
+        return SystemName.MacOS;
+
+      case SystemName.ChromeOS:
+        return SystemName.ChromeOS;
+
+      case SystemName.WindowsXP:
+      case SystemName.WindowsVista:
+      case SystemName.Windows7:
+      case SystemName.Windows10:
+        return SystemName.Windows;
+
+      default:
+        break;
+    }
+
+    return SystemName.Unknown;
+  }
+
+  /**
+   * 获取设备id(机型)
+   * 只有Android可以使用，其他设备调用返回空字符串
+   */
+  static get deviceId (): string {
+    if (SystemUtil.device_id) {
+      return SystemUtil.device_id;
+    }
+    if (navigator && navigator.userAgent) {
+      if (SystemUtil.systemName === SystemName.Android) {
+        let s: RegExpMatchArray | null = navigator.userAgent.match(/;\s*([^;]+?)\s*;?\s*Build\//i); //(/;\s*([^;]+?)\s+Build\//i);
+        if (s && s.length > 1) {
+          SystemUtil.device_id = s[1];
+        }
+      } else if (SystemUtil.systemName === SystemName.HarmonyOS) {
+        let s: RegExpMatchArray | null = navigator.userAgent.match(/\((?:[^;]+; )*([^;]+);\s*(HMSCore\s+[\d.]+)\)/i);
+        if (s) {
+          if (s.length > 2) {
+            SystemUtil.device_id = s[1];
+            // s[2] 是设备码
+          } else if ( s.length > 1) {
+            SystemUtil.device_id = s[1];  
+          }
+          
+        }
+        
+      }
+      
+    }
+    return SystemUtil.device_id;
+  }
+
   /**
    * 判断版本是否支持
    * @param minVersionStr 最小版本号
@@ -107,8 +171,8 @@ export class SystemUtil {
    */
   static getSystemInfo ():void {
     if (!SystemUtil.system_name || !SystemUtil.system_version) {
-      if (SystemUtil.mock_useragent || (navigator && navigator.userAgent)) {
-        let ua: string = SystemUtil.mock_useragent || navigator.userAgent;
+      if (navigator && navigator.userAgent) {
+        let ua: string = navigator.userAgent;
         ua = ua.toLowerCase();
         if (ua.indexOf('ipad') > -1) {
           SystemUtil.system_name = SystemName.iPad
@@ -116,11 +180,14 @@ export class SystemUtil {
         } else if (ua.indexOf('iphone') > -1) {
           SystemUtil.system_name = SystemName.iPhone
           SystemUtil.system_version = SystemUtil.getIosSystemVersion(ua)
+        } else if (ua.indexOf('harmonyos') > -1) {
+          SystemUtil.system_name = SystemName.HarmonyOS;
+          SystemUtil.system_version = '0.0';
         } else if (ua.indexOf('android') > -1) {
           SystemUtil.system_name = SystemName.Android
           SystemUtil.system_version = SystemUtil.getAndroidSystemVersion(ua)
         } else if (ua.indexOf('win') > -1) {
-          if (ua.indexOf('windwos nt 10') > -1 || ua.indexOf('windows 10')) {
+          if (ua.indexOf('windwos nt 10') > -1 || ua.indexOf('windows 10') > -1) {
             SystemUtil.system_name = SystemName.Windows10
             SystemUtil.system_version = '10'
           } else if (ua.indexOf('windows nt 6.1') > -1 || ua.indexOf('windows 7') > -1) {
@@ -133,7 +200,11 @@ export class SystemUtil {
             SystemUtil.system_name = SystemName.WindowsXP
             SystemUtil.system_version = 'xp'
           } else {
-            SystemUtil.system_name = SystemName.Windows
+            if (BrowserUtil.isOppoBrowser) {
+              SystemUtil.system_name = SystemName.Android
+            } else {
+              SystemUtil.system_name = SystemName.Windows
+            }
             SystemUtil.system_version = '0.0'
           }
         } else if (ua.indexOf('mac') > -1) {

@@ -1,5 +1,9 @@
 
 
+### 1.0.8
+  *  增加单元测试
+  *  增加获取Android的设备型号
+  *  只保留BrowserUtil和SystemUtil
 
 ### 1.0.5
   * 修复导出方法异常
